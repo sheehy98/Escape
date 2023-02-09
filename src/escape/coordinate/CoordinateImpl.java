@@ -28,4 +28,14 @@ public class CoordinateImpl implements Coordinate{
     public int getColumn() {
         return col;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        try {
+            CoordinateImpl coord = (CoordinateImpl) obj;
+            return coord.getRow() == row && coord.getColumn() == col;
+        } catch (Exception e)  {
+            return false;
+        }
+    }
 }

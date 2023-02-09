@@ -111,7 +111,15 @@ public class EscapeGameBuilder
      ***********************************************************************/
     public EscapeGameManager makeGameManager()
     {
-    	// >>> YOU MUST IMPLEMENT THIS METHOD<<<
-    	return null;
+		EscapeGameManagerImpl ecm = new EscapeGameManagerImpl();
+
+		// Use values of gameInitializer to set parameters of the Escape Game Manager
+		ecm.setCoordinateType(gameInitializer.getCoordinateType());
+		ecm.setRows(gameInitializer.getxMax());
+		ecm.setColumns(gameInitializer.getyMax());
+		ecm.setPlayers(gameInitializer.getPlayers());
+		ecm.setLocations(gameInitializer.getLocationInitializers());
+
+    	return ecm;
     }
 }

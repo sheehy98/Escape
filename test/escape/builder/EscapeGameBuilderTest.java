@@ -479,4 +479,38 @@ public class EscapeGameBuilderTest {
         assertTrue(move1.isValidMove());
         assertTrue(coord2.equals(move1.finalLocation()));
     }
+    
+    @Test
+    void twoTypes() {
+        EscapeGameManager<CoordinateImpl> egm = null;
+        try {
+            egm = new EscapeGameBuilder("C:/Users/Mago Sheehy/Documents/git/WPI/CS4233/Escape/configurations/test17.ecg").makeGameManager();
+        } catch (Exception e) {
+            fail("Exception from builder: " + e.getMessage());
+        }
+        CoordinateImpl coord1 = egm.makeCoordinate(4, 4);
+        CoordinateImpl coord2 = egm.makeCoordinate(5, 6);
+        GameStatus move1 = egm.move(coord1, coord2);
+
+        assertFalse(move1.isValidMove());
+        assertTrue(coord1.equals(move1.finalLocation()));
+
+        CoordinateImpl coord3 = egm.makeCoordinate(2, 2);
+        GameStatus move2 = egm.move(coord1, coord3);
+
+        assertTrue(move2.isValidMove());
+        assertTrue(coord3.equals(move2.finalLocation()));
+
+        CoordinateImpl coord4 = egm.makeCoordinate(3, 3);
+        CoordinateImpl coord5 = egm.makeCoordinate(1, 1);
+        GameStatus move3 = egm.move(coord4, coord5);
+
+        assertFalse(move3.isValidMove());
+        assertTrue(coord4.equals(move3.finalLocation()));
+        
+        GameStatus move4 = egm.move(coord4, coord1);
+
+        assertTrue(move4.isValidMove());
+        assertTrue(coord1.equals(move4.finalLocation()));
+    }
 }

@@ -1,0 +1,15 @@
+Coordinate type : SQUARE
+xMax : 0
+yMax : 0
+
+Players : 
+    Chris 
+    Pat
+
+Locations :
+    (4, 4) Chris snail
+    (3, 3) Pat dog
+
+Piece descriptors :
+    SNAIL linear [fly, distance 5]
+    DOG diagonal [distance 3]

@@ -115,6 +115,11 @@ public class EscapeGameBuilder
 
 		// Use values of gameInitializer to set parameters of the Escape Game Manager
 		ecm.setCoordinateType(gameInitializer.getCoordinateType());
+		ecm.setRows(gameInitializer.getxMax());
+		ecm.setColumns(gameInitializer.getyMax());
+		ecm.setPlayers(gameInitializer.getPlayers());
+		ecm.setLocations(gameInitializer.getLocationInitializers());
+		ecm.setPieceTypes(gameInitializer.getPieceTypes());
 
     	return ecm;
     }

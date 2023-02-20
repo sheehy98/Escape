@@ -1,0 +1,13 @@
+Coordinate type : SQUARE
+xMax : 0
+yMax : 0
+
+Players : 
+    Chris 
+    Pat
+
+Locations :
+    (4, 4) Chris snail
+
+Piece descriptors :
+    SNAIL diagonal [distance 20]

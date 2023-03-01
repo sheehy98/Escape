@@ -29,4 +29,8 @@ public class GameStatusImpl implements GameStatus {
     public Coordinate finalLocation() {
 	    return finalLocation;
     }
+
+    public CombatResult getCombatResult() {
+	    return null;
+    }
 }

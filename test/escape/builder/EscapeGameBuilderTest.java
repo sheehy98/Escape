@@ -513,4 +513,27 @@ public class EscapeGameBuilderTest {
         assertTrue(move4.isValidMove());
         assertTrue(coord1.equals(move4.finalLocation()));
     }
+    
+    @Test
+    void mixedBounds() {
+        EscapeGameManager<CoordinateImpl> egm = null;
+        try {
+            egm = new EscapeGameBuilder("C:/Users/Mago Sheehy/Documents/git/WPI/CS4233/Escape/configurations/test18.ecg").makeGameManager();
+        } catch (Exception e) {
+            fail("Exception from builder: " + e.getMessage());
+        }
+        CoordinateImpl coord1 = egm.makeCoordinate(2, 2);
+        CoordinateImpl coord2 = egm.makeCoordinate(2, -2);
+        GameStatus move1 = egm.move(coord1, coord2);
+
+        assertTrue(move1.isValidMove());
+        assertTrue(coord2.equals(move1.finalLocation()));
+
+        CoordinateImpl coord3 = egm.makeCoordinate(1, 1);
+        CoordinateImpl coord4 = egm.makeCoordinate(-1, 1);
+        GameStatus move2 = egm.move(coord3, coord4);
+
+        assertFalse(move2.isValidMove());
+        assertTrue(coord3.equals(move2.finalLocation()));
+    }
 }

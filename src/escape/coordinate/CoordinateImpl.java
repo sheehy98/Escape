@@ -57,7 +57,8 @@ public class CoordinateImpl implements Coordinate{
     }
 
 	/**
-	 * Get the orthogonal neighbors of a coordinate
+	 * Get the orthogonal neighbors of a coordinate (all neighbors are
+     * treated as orthogonal for HEX boards)
 	 * @return an ArrayList of relevant neighbors
 	 */
     private ArrayList<CoordinateImpl> getOrthoNeighbors() {
@@ -67,6 +68,14 @@ public class CoordinateImpl implements Coordinate{
             neighbors.add(new CoordinateImpl(type, row, col - 1));
             neighbors.add(new CoordinateImpl(type, row, col + 1));
             neighbors.add(new CoordinateImpl(type, row - 1, col));
+        }
+        else {
+            neighbors.add(new CoordinateImpl(type, row + 1, col));
+            neighbors.add(new CoordinateImpl(type, row, col + 1));
+            neighbors.add(new CoordinateImpl(type, row - 1, col + 1));
+            neighbors.add(new CoordinateImpl(type, row - 1, col));
+            neighbors.add(new CoordinateImpl(type, row, col - 1));
+            neighbors.add(new CoordinateImpl(type, row + 1, col - 1));
         }
         return neighbors;
     }
@@ -100,6 +109,28 @@ public class CoordinateImpl implements Coordinate{
         }
         return neighbors;
     }
+    
+    /**
+	 * Get each of the directions that a linear path could follow
+	 * @return an 2D array where each element describes the deltaRow and deltaCol of a direction
+	 */
+    public int[][] getLinearDirections() {
+        if (type == CoordinateType.SQUARE) {
+            int[][] directions = {
+                {1, -1},  {1, 0},  {1, 1},
+                {0, -1},           {0, 1},
+                {-1, -1}, {-1, 0}, {-1, 1}
+            };
+            return directions;
+        }
+
+        int[][] directions = {
+            {-1, 1}, {0, 1},  {1, 0},
+            {-1, 0}, {0, -1}, {1, -1},
+        };
+        return directions; 
+    };
+    
     
     @Override
     public boolean equals(Object obj) {

@@ -4,7 +4,8 @@ import escape.required.*;
 
 public class GameStatusImpl implements GameStatus {
     boolean valid;
-    Coordinate finalLocation;
+    MoveResult moveResult = MoveResult.NONE;
+    boolean isMoreInformation;
 
     public void setValid(boolean valid) {
         this.valid = valid;
@@ -14,20 +15,24 @@ public class GameStatusImpl implements GameStatus {
         return valid;
     }
 
+    public void setIsMoreInformation(boolean isMoreInformation) {
+		this.isMoreInformation = isMoreInformation;
+    }
+
     public boolean isMoreInformation() {
-		throw new EscapeException("Not implemented");
+		return isMoreInformation;
+    }
+
+    public void setMoveResult(MoveResult moveResult) {
+		this.moveResult = moveResult;
     }
 
     public MoveResult getMoveResult() {
-		return MoveResult.NONE;
-    }
-
-    public void setFinalLocation(Coordinate finalLocation) {
-		this.finalLocation = finalLocation;
+		return moveResult;
     }
 
     public Coordinate finalLocation() {
-	    return finalLocation;
+	    return null;
     }
 
     public CombatResult getCombatResult() {

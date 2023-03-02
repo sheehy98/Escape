@@ -118,8 +118,9 @@ public class EscapeGameBuilder
 		ecm.setRows(gameInitializer.getxMax());
 		ecm.setColumns(gameInitializer.getyMax());
 		ecm.setPlayers(gameInitializer.getPlayers());
-		ecm.setLocations(gameInitializer.getLocationInitializers());
 		ecm.setPieceTypes(gameInitializer.getPieceTypes());
+		ecm.setLocations(gameInitializer.getLocationInitializers());
+		ecm.setRules(gameInitializer.getRules());
 
     	return ecm;
     }

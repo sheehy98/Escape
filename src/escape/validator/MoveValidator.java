@@ -6,6 +6,7 @@ import escape.builder.PieceTypeDescriptor;
 import escape.coordinate.CoordinateImpl;
 import escape.piece.EscapePieceImpl;
 import escape.required.Coordinate;
+import escape.required.LocationType;
 
 /**
  * Class to handle validation of moves
@@ -15,15 +16,43 @@ public class MoveValidator {
     private int rows;
     private int cols;
     private PieceTypeDescriptor[] pieceTypes;
+    private boolean canFight;
 
     /*
      * Default constructor
      */
-    public MoveValidator(Map<Coordinate, EscapePieceImpl> board, int rows, int cols, PieceTypeDescriptor[] pieceTypes) {
+    public MoveValidator(Map<Coordinate, EscapePieceImpl> board, int rows, int cols, PieceTypeDescriptor[] pieceTypes, boolean canFight) {
         this.board = board;
         this.rows = rows;
         this.cols = cols;
         this.pieceTypes = pieceTypes;
+        this.canFight = canFight;
+    }
+
+    /**
+	 * Determines if the next player is stuck
+	 * @param player player to check
+	 * @param type board type
+	 * @param board board to check on
+	 * @return true if given player is stuck; otherwise false
+	 */
+    public boolean nextCantMove (String player, Coordinate.CoordinateType type, Map<Coordinate, EscapePieceImpl> board) {
+        for (Coordinate location: board.keySet()) {
+            CoordinateImpl locationImpl = new CoordinateImpl(type, location.getRow(), location.getColumn());
+
+            // If there is any piece on the board that belongs to the player and has
+            // any valid path, they are not stuck
+            if (
+                board.get(location).getType() == null &&
+                player.equals(board.get(location).getPlayer())
+            ) {
+                PathFinder pathFinder = new PathFinder(board, rows, cols, findDescriptor(board.get(location)), canFight);
+                if (pathFinder.hasAnyPath(locationImpl)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     
     /**
@@ -40,6 +69,18 @@ public class MoveValidator {
             hasPath(from, to)
         );
     }
+
+    /**
+	 * Determines if a given coordinate is the exit
+	 * @param to coordinate to check
+	 * @return true if the given coordinate is the exitl otherwise false
+	 */
+    public boolean isExiting(Coordinate to) {
+        return (
+            board.containsKey(to) &&
+            board.get(to).getType() == LocationType.EXIT
+        );
+    }
     
     /**
 	 * Determines if the specified player has a piece at the specified location
@@ -51,6 +92,7 @@ public class MoveValidator {
     private boolean hasPiece(String player, Coordinate from) {
         return (
             board.containsKey(from) &&
+            board.get(from).getType() == null &&
             board.get(from).getPlayer().equals(player)
         );
     }
@@ -78,7 +120,7 @@ public class MoveValidator {
 	 */
     private boolean hasPath(CoordinateImpl from, Coordinate to) {
         EscapePieceImpl piece = board.get(from);
-        PathFinder pathFinder = new PathFinder(board, rows, cols, findDescriptor(piece));
+        PathFinder pathFinder = new PathFinder(board, rows, cols, findDescriptor(piece), canFight);
         return pathFinder.hasPath(from, to);
     }
 }

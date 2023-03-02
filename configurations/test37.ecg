@@ -1,0 +1,18 @@
+Coordinate type : SQUARE
+xMax : 4
+yMax : 4
+
+Players : 
+    Chris 
+    Pat
+
+Locations :
+    (2, 2) Chris dog
+    (2, 3) Pat snail
+
+Piece descriptors :
+    SNAIL omni [distance 3]
+    DOG linear [jump, distance 3]
+
+Rules :
+    POINT_CONFLICT
